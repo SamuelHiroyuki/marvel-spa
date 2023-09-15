@@ -6,13 +6,13 @@ export default function Logo() {
         <Link href="/" className="flex items-end select-none">
             <Image
                 src="/logo.svg"
-                alt="Marvel Search Heros Logo"
+                alt="Marvel Search Heroes Logo"
                 width={220}
                 height={120}
                 priority
             />
             <p className="mb-5 font-bold text-base text-neutral-700">
-                Search heros
+                Search heroes
             </p>
         </Link>
     )
