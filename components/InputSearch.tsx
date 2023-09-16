@@ -35,7 +35,7 @@ async function fetchHeroesByName(q: string): Promise<MarvelResponse<MarvelCharac
     return await request.json()
 }
 
-export default function InputSearch({ query }: { query: string }) {
+export default function InputSearch({ query, disabled = false }: { query: string; disabled?: boolean }) {
     const [options, setOptions] = useState<Option[]>([])
     const { register, reset, handleSubmit } = useForm<FormData>({
         resolver: zodResolver(FormDataSchema),
@@ -93,6 +93,7 @@ export default function InputSearch({ query }: { query: string }) {
                     onChange(e)
                     throttledFuncao(e.target.value)
                 }}
+                disabled={disabled}
                 autoComplete="off"
                 className="peer w-full font-semibold placeholder:text-[#ff0000]/60 text-[#ff0000]/60 outline-[#ff0000] bg-[#FDECEC] rounded-full pl-20 pr-8 py-3"
                 placeholder="Procure por heróis"
