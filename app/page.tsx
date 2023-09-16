@@ -1,18 +1,47 @@
 import Header from "@/components/Header";
-import HeartButton from "@/components/HeartButton";
 import HeroesList from "@/components/HeroesList";
-import Image from "next/image";
-import Link from "next/link";
+import { MarvelCharacter } from "@/types/MarvelCharacters";
+import { MarvelCharacterResponse, MarvelResponse } from "@/types/MarvelResponse";
+import { requestToMarvel } from "@/utils/marvelService";
+import { SearchParams, handleServerSearchParam } from "@/utils/params";
 
+async function fetchHeroes({ page }: { page: number }): Promise<MarvelResponse<MarvelCharacterResponse<MarvelCharacter>>> {
+  const offset = (page - 1) * 20
+  const request = await requestToMarvel("characters", {
+    searchParams: {
+      offset: offset.toString()
+    }
+  })
 
-export default function Home() {
+  return await request.json()
+}
+
+export default async function Home({ searchParams }: { searchParams: SearchParams }) {
+  const getParam = handleServerSearchParam(searchParams)
+  const page = getParam<number>("page", 1, (value, initialValue) => {
+    const _value = Number(value);
+    if (isNaN(_value) || _value < 1) return initialValue
+    return _value;
+  })
+  const query = getParam<string>("q", "")
+
+  const { data, attributionText } = await fetchHeroes({ page })
+
   return (
-    <main className="min-h-screen flex flex-col gap-4 py-6 px-24">
+    <main className="min-h-screen flex flex-col gap-16 pt-6">
       <Header />
 
-      <section className="max-w-7xl mx-auto">
-        <HeroesList />
+      <section className="max-w-7xl mx-auto px-24">
+        <header className="mb-8">
+          <p className="font-medium text-neutral-400">Encontrados {data.total} heróis</p>
+          {/* <nav>Ordenar por nome - A/Z</nav> */}
+        </header>
+        <HeroesList heroes={data.results} />
       </section>
+
+      <footer className="bg-[#ff0000] h-16 flex items-center justify-center">
+        <p className="text-white font-medium">{attributionText}</p>
+      </footer>
     </main >
   )
 }

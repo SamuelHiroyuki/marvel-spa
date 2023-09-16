@@ -7,11 +7,11 @@ export default function Logo() {
             <Image
                 src="/logo.svg"
                 alt="Marvel Search Heroes Logo"
-                width={220}
-                height={120}
+                width={176}
+                height={96}
                 priority
             />
-            <p className="mb-5 font-bold text-base text-neutral-700">
+            <p className="mb-[14px] font-bold text-base text-neutral-700">
                 Search heroes
             </p>
         </Link>

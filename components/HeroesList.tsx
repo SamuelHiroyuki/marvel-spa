@@ -1,30 +1,35 @@
 import Image from "next/image";
 import Link from "next/link";
 import HeartButton from "./HeartButton";
+import { MarvelCharacter } from "@/types/MarvelCharacters";
 
-const ITEMS = 20
+interface HeroesListProps {
+    heroes: MarvelCharacter[]
+}
 
-export default function HeroesList() {
+export default function HeroesList({ heroes }: HeroesListProps) {
     return (
         <ul role="list" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-9 gap-y-12">
-            {[...Array(ITEMS)].map((_, index) => (
-                <li key={index} className="flex flex-col gap-6">
+            {heroes.map(hero => (
+                <li key={hero.id} className="flex flex-col gap-6">
                     <Link href="#" className='relative group aspect-square overflow-hidden'>
                         <Image
-                            src="http://i.annihil.us/u/prod/marvel/i/mg/9/c0/527bb7b37ff55.jpg"
+                            src={`${hero.thumbnail.path}.${hero.thumbnail.extension}`}
                             alt=''
-                            className='object-cover'
+                            className='object-cover object-left h-full'
                             width={300}
                             height={300}
                         />
                         <div className="absolute w-full p-3 bg-[#ff0000] inset-0 translate-y-100_4 group-hover:bg-opacity-50 group-hover:translate-y-0 transition-all">
                             <p className="line-clamp-4 font-medium text-white text-sm">
-                                Wounded, captured and forced to build a weapon by his enemies, billionaire industrialist Tony Stark instead created an advanced suit of armor to save his life and escape captivity. Now with a new outlook on life, Tony uses his money and intelligence to make the world a safer, better place as Iron Man.
+                                {hero.description || hero.name}
                             </p>
                         </div>
                     </Link>
-                    <div className="flex items-center justify-between select-none">
-                        <p className='truncate font-extrabold text-neutral-700'>Iron Man</p>
+                    <div className="flex items-center justify-between gap-4 select-none">
+                        <p title={hero.name} className='truncate font-extrabold text-neutral-700'>
+                            {hero.name}
+                        </p>
                         <HeartButton />
                     </div>
                 </li>
