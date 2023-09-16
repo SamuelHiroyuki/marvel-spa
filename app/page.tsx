@@ -10,6 +10,7 @@ import { Suspense } from "react";
 import Skeleton from "./skeleton";
 import HeroesSorter from "@/components/HeroesSorter";
 import { OrderByType, parseStringToOrderBy } from "@/utils/orderBy";
+import HeartSwitch from "@/components/HeartSwitch";
 
 interface FetchHeroesProps {
   query: string
@@ -53,8 +54,9 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
                   <div className="flex justify-between items-start md:items-center flex-col md:flex-row gap-8">
                     <p className="font-medium text-neutral-400 md:text-base text-sm">Encontrados {data.count} heróis</p>
 
-                    <div className="md:ml-auto m-0 flex justify-between">
+                    <div className="md:ml-auto m-0 flex justify-between gap-8">
                       <HeroesSorter />
+                      <HeartSwitch />
                     </div>
                   </div>
                 </header>
