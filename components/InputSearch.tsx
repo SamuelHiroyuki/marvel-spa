@@ -48,10 +48,8 @@ export default function InputSearch({ query, disabled = false }: { query: string
     const searchParams = useSearchParams();
 
     const onSubmit = useCallback((data: FormData) => {
-        const newSearchParams = new URLSearchParams(searchParams)
-        newSearchParams.set("q", data.q)
-        router.push(`?${newSearchParams.toString()}`)
-    }, [router, searchParams])
+        router.push(`?q=${data.q}`)
+    }, [router])
 
     const { onChange, ...inputProps } = useMemo(() => register("q"), [register])
 

@@ -11,6 +11,7 @@ import Skeleton from "./skeleton";
 import HeroesSorter from "@/components/HeroesSorter";
 import { OrderByType, parseStringToOrderBy } from "@/utils/orderBy";
 import HeartSwitch from "@/components/HeartSwitch";
+import Pagination from "@/components/Pagination";
 
 interface FetchHeroesProps {
   query: string
@@ -45,30 +46,38 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
 
       <Suspense key={`${page}_${query}_${orderBy}`} fallback={<Skeleton />}>
         <Await promise={promise}>
-          {({ data, attributionText }) => (
-            <>
-              <section className="max-w-7xl mx-auto px-24 flex-1 w-full">
-                <header className="mb-8 flex flex-col gap-20">
-                  <InputSearch query={query} />
+          {({ data, attributionText }) => {
+            const heroesFoundText = data.count === 0 ?
+              "Nenhum herói encontrado" :
+              `Encontrados ${1 + ((page - 1) * 20)} - ${page * 20} de ${data.total} heróis`
+            return (
+              <>
+                <section className="max-w-7xl mx-auto px-24 flex-1 w-full flex flex-col gap-8">
+                  <header className="flex flex-col gap-20">
+                    <InputSearch query={query} />
 
-                  <div className="flex justify-between items-start md:items-center flex-col md:flex-row gap-8">
-                    <p className="font-medium text-neutral-400 md:text-base text-sm">Encontrados {data.count} heróis</p>
+                    <div className="flex justify-between items-start md:items-center flex-col md:flex-row gap-8">
+                      <p className="font-medium text-neutral-400 md:text-base text-sm">
+                        {heroesFoundText}
+                      </p>
 
-                    <div className="md:ml-auto m-0 flex justify-between gap-8">
-                      <HeroesSorter />
-                      <HeartSwitch />
+                      <div className="md:ml-auto m-0 flex justify-between gap-8">
+                        <HeroesSorter />
+                        <HeartSwitch />
+                      </div>
                     </div>
-                  </div>
-                </header>
+                  </header>
 
-                <HeroesList heroes={data.results} />
-              </section>
+                  <HeroesList heroes={data.results} />
+                  {data.count !== 0 && <Pagination page={page} total={data.total} />}
+                </section>
 
-              <footer className="bg-[#ff0000] h-16 mt-12 flex items-center justify-center">
-                <p className="text-white font-medium">{attributionText}</p>
-              </footer>
-            </>
-          )}
+                <footer className="bg-[#ff0000] h-16 mt-12 flex items-center justify-center">
+                  <p className="text-white font-medium">{attributionText}</p>
+                </footer>
+              </>
+            )
+          }}
         </Await>
       </Suspense>
     </main >
