@@ -8,6 +8,26 @@ interface HeroesListProps {
 }
 
 export default function HeroesList({ heroes }: HeroesListProps) {
+    if (!heroes.length) {
+        return (
+            <div className="flex flex-col items-center justify-center mt-36 gap-2">
+                <Image
+                    src="/hero.svg"
+                    alt=''
+                    width={32}
+                    height={32}
+                />
+                <p className="text-neutral-500 font-medium text-sm text-center">
+                    Nenhum herói encontrado <span className="text-[#ff0000] font-semibold">nesse</span> universo!
+                </p>
+
+                <Link href="/" className="bg-[#ff0000] hover:bg-[#AA0000] text-white font-medium px-4 py-2 rounded mt-4">
+                    Voltar ao início?
+                </Link>
+            </div>
+        )
+    }
+
     return (
         <ul role="list" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-9 gap-y-12">
             {heroes.map(hero => (

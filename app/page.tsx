@@ -41,11 +41,11 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
         <Await promise={promise}>
           {({ data, attributionText }) => (
             <>
-              <section className="max-w-7xl mx-auto px-24 flex-1">
+              <section className="max-w-7xl mx-auto px-24 flex-1 w-full">
                 <header className="mb-8 flex flex-col gap-16">
                   <InputSearch query={query} />
                   <div>
-                    <p className="font-medium text-neutral-400">Encontrados {data.total} heróis</p>
+                    <p className="font-medium text-neutral-400">Encontrados {data.count} heróis</p>
                   </div>
                 </header>
                 <HeroesList heroes={data.results} />
