@@ -3,7 +3,7 @@ import HeroesList from "@/components/HeroesList";
 import InputSearch from "@/components/InputSearch";
 import { MarvelCharacter } from "@/types/MarvelCharacters";
 import { MarvelCharacterResponse, MarvelResponse } from "@/types/MarvelResponse";
-import { requestToMarvel } from "@/utils/marvelService";
+import { parseNumberWithMin } from "@/utils/number";
 import { SearchParams, handleServerSearchParam } from "@/utils/params";
 
 interface FetchHeroesProps {
@@ -12,24 +12,19 @@ interface FetchHeroesProps {
 }
 
 async function fetchHeroes({ page, query }: FetchHeroesProps): Promise<MarvelResponse<MarvelCharacterResponse<MarvelCharacter>>> {
-  const offset = (page - 1) * 20
-  const request = await requestToMarvel("characters", {
-    searchParams: {
-      offset: offset.toString(),
-      nameStartsWith: query
-    }
-  })
+  const url = new URL("api/marvel/characters", "http://localhost:3000/")
+
+  url.searchParams.append("page", page.toString())
+  url.searchParams.append("query", query)
+
+  const request = await fetch(url)
 
   return await request.json()
 }
 
 export default async function Home({ searchParams }: { searchParams: SearchParams }) {
   const getParam = handleServerSearchParam(searchParams)
-  const page = getParam<number>("page", 1, (value, initialValue) => {
-    const _value = Number(value);
-    if (isNaN(_value) || _value < 1) return initialValue
-    return _value;
-  })
+  const page = getParam<number>("page", 1, parseNumberWithMin)
   const query = getParam<string>("q", "")
 
   const { data, attributionText } = await fetchHeroes({ page, query })

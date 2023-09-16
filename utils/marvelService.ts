@@ -1,3 +1,4 @@
+import "server-only"
 import { createHash } from "crypto"
 import { SearchParams } from "./params"
 
@@ -28,6 +29,6 @@ export function requestToMarvel(path: string, { init, searchParams }: {
     url.searchParams.append("ts", ts)
     url.searchParams.append("hash", md5)
     url.searchParams.append("apikey", process.env.MARVEL_PUBLIC_KEY!)
-    console.log(url.searchParams.toString())
+
     return fetch(url, init)
 }
