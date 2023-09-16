@@ -50,7 +50,9 @@ export default function HeroesList({ heroes }: HeroesListProps) {
                         <p title={hero.name} className='truncate font-extrabold text-neutral-700'>
                             {hero.name}
                         </p>
-                        <HeartButton />
+                        <div className="min-w-[16px]">
+                            <HeartButton />
+                        </div>
                     </div>
                 </li>
             ))}

@@ -26,3 +26,18 @@ export function handleServerSearchParam(obj: SearchParams) {
         return _parser(value) as T
     }
 }
+
+export function searchParamSetter(searchParams?: URLSearchParams) {
+    const newSearchParams = new URLSearchParams(searchParams)
+
+    return (key: string, value: string) => {
+        if (!!value.trim()) {
+            // Sets the value associated with a given search parameter to the given value. If there are several values, the others are deleted.
+            newSearchParams.set(key, value)
+        } else {
+            newSearchParams.delete(key)
+        }
+
+        return newSearchParams.toString()
+    }
+}

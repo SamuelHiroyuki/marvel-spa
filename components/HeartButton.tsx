@@ -11,7 +11,7 @@ export default function HeartButton({ isChecked = false, className, ...props }: 
     return (
         <button
             {...props}
-            className={cn("flex flex-col items-center gap-4 group", className)}
+            className={cn("flex flex-col items-center justify-center group", className)}
         >
             <Image
                 src="/fav-hover.svg"
