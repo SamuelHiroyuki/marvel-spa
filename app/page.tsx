@@ -58,7 +58,7 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
           {({ data, attributionText }) => {
             const heroesFoundText = data.count === 0 ?
               "Nenhum herói encontrado" :
-              `Encontrados ${1 + ((page - 1) * 20)} - ${page * 20} de ${data.total} heróis`
+              `Encontrados ${1 + ((page - 1) * 20)} - ${Math.min(page * 20, data.count)} de ${data.total} heróis`
             return (
               <>
                 <section className="max-w-7xl mx-auto px-24 flex-1 w-full flex flex-col gap-8">
