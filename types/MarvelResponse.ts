@@ -3,7 +3,7 @@ export interface MarvelResponse<T> {
     data: T
 }
 
-export interface MarvelCharacterResponse<T> {
+export interface MarvelListResponse<T> {
     offset: number
     limit: number
     total: number

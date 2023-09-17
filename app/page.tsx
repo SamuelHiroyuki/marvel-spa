@@ -3,15 +3,16 @@ import Header from "@/components/Header";
 import HeroesList from "@/components/HeroesList";
 import InputSearch from "@/components/InputSearch";
 import { MarvelCharacter } from "@/types/MarvelCharacters";
-import { MarvelCharacterResponse, MarvelResponse } from "@/types/MarvelResponse";
+import { MarvelListResponse, MarvelResponse } from "@/types/MarvelResponse";
 import { parseNumberWithMin } from "@/utils/number";
 import { SearchParams, handleServerSearchParam } from "@/utils/params";
 import { Suspense } from "react";
-import Skeleton from "./skeleton";
 import HeroesSorter from "@/components/HeroesSorter";
 import { OrderByType, parseStringToOrderBy } from "@/utils/orderBy";
 import HeartSwitch from "@/components/HeartSwitch";
 import Pagination from "@/components/Pagination";
+import Footer from "@/components/Footer";
+import Skeleton from "@/components/HeroesList/skeleton";
 
 interface FetchHeroesProps {
   query: string
@@ -19,7 +20,7 @@ interface FetchHeroesProps {
   orderBy: OrderByType
 }
 
-async function fetchHeroes({ page, query, orderBy }: FetchHeroesProps): Promise<MarvelResponse<MarvelCharacterResponse<MarvelCharacter>>> {
+async function fetchHeroes({ page, query, orderBy }: FetchHeroesProps): Promise<MarvelResponse<MarvelListResponse<MarvelCharacter>>> {
   const url = new URL("api/marvel/characters", "http://localhost:3000/")
 
   url.searchParams.append("page", page.toString())
@@ -72,9 +73,7 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
                   {data.count !== 0 && <Pagination page={page} total={data.total} />}
                 </section>
 
-                <footer className="bg-[#ff0000] h-16 mt-12 flex items-center justify-center">
-                  <p className="text-white font-medium">{attributionText}</p>
-                </footer>
+                <Footer attributionText={attributionText} />
               </>
             )
           }}

@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { throttle } from "@/utils/function";
-import { MarvelCharacterResponse, MarvelResponse } from "@/types/MarvelResponse";
+import { MarvelListResponse, MarvelResponse } from "@/types/MarvelResponse";
 import { MarvelCharacter } from "@/types/MarvelCharacters";
 import { splitString } from "@/utils/string";
 import { cn } from "@/utils/cn";
@@ -26,7 +26,7 @@ interface Option {
     fullname: string
 }
 
-async function fetchHeroesByName(q: string): Promise<MarvelResponse<MarvelCharacterResponse<MarvelCharacter>>> {
+async function fetchHeroesByName(q: string): Promise<MarvelResponse<MarvelListResponse<MarvelCharacter>>> {
     const url = new URL("api/marvel/characters", "http://localhost:3000/")
     url.searchParams.append("limit", "5")
     url.searchParams.append("query", q)
@@ -45,7 +45,6 @@ export default function InputSearch({ query, disabled = false }: { query: string
         }
     });
     const router = useRouter();
-    const searchParams = useSearchParams();
 
     const onSubmit = useCallback((data: FormData) => {
         router.push(`?q=${data.q}`)

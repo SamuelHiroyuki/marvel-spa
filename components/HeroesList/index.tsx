@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import HeartButton from "./HeartButton";
 import { MarvelCharacter } from "@/types/MarvelCharacters";
+import HeartButton from "../HeartButton";
 
 interface HeroesListProps {
     heroes: MarvelCharacter[]
@@ -32,7 +32,7 @@ export default function HeroesList({ heroes }: HeroesListProps) {
         <ul role="list" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-9 gap-y-12">
             {heroes.map(hero => (
                 <li key={hero.id} className="flex flex-col gap-6">
-                    <Link href="#" className='relative group aspect-square overflow-hidden'>
+                    <Link href={`/character/${hero.name}`} className='relative group aspect-square overflow-hidden'>
                         <Image
                             src={`${hero.thumbnail.path}.${hero.thumbnail.extension}`}
                             alt=''

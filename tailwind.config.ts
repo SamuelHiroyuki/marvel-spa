@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss'
+import plugin from 'tailwindcss/plugin';
 
 const config: Config = {
   content: [
@@ -13,6 +14,26 @@ const config: Config = {
       }
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addUtilities }) {
+      addUtilities({
+        ".-rotate-y-180": {
+          transform: "rotateY(-180deg)",
+        },
+        ".grid-area-1": {
+          gridArea: "1 / 1",
+        },
+        ".preserve-3d": {
+          transformStyle: "preserve-3d",
+        },
+        ".perspective-1000": {
+          perspective: "1000px",
+        },
+        ".backface-hidden": {
+          backfaceVisibility: "hidden",
+        },
+      });
+    })
+  ],
 }
 export default config
