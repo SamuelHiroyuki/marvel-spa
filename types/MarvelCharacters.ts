@@ -6,4 +6,7 @@ export interface MarvelCharacter {
         path: string
         extension: string
     }
+    comics: {
+        available: number
+    }
 }

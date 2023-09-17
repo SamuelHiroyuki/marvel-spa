@@ -5,7 +5,7 @@ import Link from "next/link"
 import { format, parseISO } from "date-fns"
 import { cn } from "@/utils/cn"
 
-async function fetchHero({ characterId }: { characterId: number }): Promise<MarvelResponse<MarvelListResponse<MarvelComic>>> {
+async function fetchComics({ characterId }: { characterId: number }): Promise<MarvelResponse<MarvelListResponse<MarvelComic>>> {
     const url = new URL(`api/marvel/characters/${characterId}/comics`, "http://localhost:3000/")
 
     const request = await fetch(url, { next: { revalidate: 1800 } })
@@ -14,7 +14,23 @@ async function fetchHero({ characterId }: { characterId: number }): Promise<Marv
 }
 
 export default async function CharacterComics({ characterId }: { characterId: number }) {
-    const { data } = await fetchHero({ characterId })
+    const { data } = await fetchComics({ characterId })
+
+    if (!data.results.length) {
+        return (
+            <div className="flex flex-col items-center justify-center gap-2 h-96">
+                <Image
+                    src="/comics.svg"
+                    alt=''
+                    width={32}
+                    height={32}
+                />
+                <p className="text-neutral-500 font-medium text-sm text-center">
+                    Nenhum quadrinho encontrado <span className="text-[#ff0000] font-semibold">nessa</span> linha do tempo!
+                </p>
+            </div>
+        )
+    }
 
     return (
         <ul role="list" className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-x-9 gap-y-12">
@@ -23,6 +39,7 @@ export default async function CharacterComics({ characterId }: { characterId: nu
                 const detailsUrl = comic.urls.find(url => url.type === "detail")
                 const onSaleDate = stringOnSaleDate ?
                     format(parseISO(stringOnSaleDate.date), "dd/MM/yyyy") : ""
+
                 return (
                     <li key={comic.id} className="flex flex-col gap-4">
                         <div className="overflow-hidden group perspective-1000 h-full">

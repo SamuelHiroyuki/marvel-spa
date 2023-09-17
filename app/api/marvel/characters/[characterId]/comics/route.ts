@@ -1,16 +1,20 @@
 import { requestToMarvel } from '@/utils/marvelService';
+import { parseStringToNumber } from '@/utils/number';
 import { NextResponse } from 'next/server';
 
 interface Params {
     characterId: string;
 }
 
-export async function GET(_: Request, { params }: { params: Params }) {
+export async function GET(request: Request, { params }: { params: Params }) {
     const { characterId } = params
+    const { searchParams } = new URL(request.url)
+
+    const limit = parseStringToNumber(searchParams.get('limit') || "", 12) || 12
 
     const _request = await requestToMarvel(`characters/${characterId}/comics`, {
         searchParams: {
-            limit: "12",
+            limit: limit.toString(),
             orderBy: "-onsaleDate"
         }
     })

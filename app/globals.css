@@ -1,3 +1,35 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .bg-name-container {
+        container-name: bgNameContainer;
+    }
+
+    .bg-name-container::before {
+        content: attr(data-name);
+        font-weight: bold;
+        position: absolute;
+        text-transform: uppercase;
+        color: white;
+        opacity: 0.75;
+        z-index: -1;
+        right: 0;
+        overflow-wrap: anywhere;
+        line-height: 1;
+        top: min(35cqw, 20cqh);
+        font-size: max(350px, 15cqw);
+        text-align: end;
+    }
+
+    .bg-name-container::after {
+        content: "";
+    }
+
+    @media (min-width: 1280px) {
+        .bg-name-container::before {
+            right: 10cqw;
+        }
+    }
+}

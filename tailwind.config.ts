@@ -17,6 +17,9 @@ const config: Config = {
   plugins: [
     plugin(function ({ addUtilities }) {
       addUtilities({
+        ".overflow-anywhere": {
+          overflowWrap: "anywhere"
+        },
         ".-rotate-y-180": {
           transform: "rotateY(-180deg)",
         },
