@@ -26,6 +26,12 @@ interface Option {
     fullname: string
 }
 
+interface Props {
+    query: string
+    className?: string
+    disabled?: boolean
+}
+
 async function fetchHeroesByName(q: string): Promise<MarvelResponse<MarvelListResponse<MarvelCharacter>>> {
     const url = new URL("api/marvel/characters", "http://localhost:3000/")
     url.searchParams.append("limit", "5")
@@ -35,7 +41,7 @@ async function fetchHeroesByName(q: string): Promise<MarvelResponse<MarvelListRe
     return await request.json()
 }
 
-export default function InputSearch({ query, disabled = false }: { query: string; disabled?: boolean }) {
+export default function InputSearch({ query, className, disabled = false }: Props) {
     const [options, setOptions] = useState<Option[]>([])
     const { register, reset, handleSubmit } = useForm<FormData>({
         resolver: zodResolver(FormDataSchema),
@@ -47,7 +53,7 @@ export default function InputSearch({ query, disabled = false }: { query: string
     const router = useRouter();
 
     const onSubmit = useCallback((data: FormData) => {
-        router.push(`?q=${data.q}`)
+        router.push(`/?q=${data.q}`)
     }, [router])
 
     const { onChange, ...inputProps } = useMemo(() => register("q"), [register])
@@ -80,7 +86,7 @@ export default function InputSearch({ query, disabled = false }: { query: string
     return (
         <form
             onSubmit={handleSubmit(onSubmit)}
-            className="max-w-[800px] w-full self-center relative"
+            className="w-full self-center relative"
         >
             <input type="submit" hidden />
             <input
@@ -92,15 +98,19 @@ export default function InputSearch({ query, disabled = false }: { query: string
                 }}
                 disabled={disabled}
                 autoComplete="off"
-                className="peer w-full font-semibold placeholder:text-[#ff0000]/60 text-[#ff0000]/60 outline-[#ff0000] bg-[#FDECEC] rounded-full pl-20 pr-8 py-3"
+                className={cn(
+                    "peer w-full font-semibold placeholder:text-[#ff0000]/60",
+                    "text-[#ff0000]/60 outline-[#ff0000] bg-[#FDECEC]",
+                    "rounded-full pl-20 pr-8 py-3",
+                    className
+                )}
                 placeholder="Procure por heróis"
             />
 
             <ul
                 className={cn([
-                    "z-10 hidden shadow-lg",
+                    "z-10 hidden shadow-lg py-2 overflow-hidden",
                     "absolute bg-[#FDECEC] rounded inset-x-0 mt-2",
-                    "py-2 overflow-hidden"
                 ], {
                     "peer-focus:block": options.length > 0,
                 })}

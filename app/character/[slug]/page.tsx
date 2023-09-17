@@ -3,10 +3,11 @@ import CharacterComics from "@/components/CharacterComics";
 import Skeleton from "@/components/CharacterComics/skeleton";
 import Footer from "@/components/Footer";
 import HeartButton from "@/components/HeartButton";
+import InputSearch from "@/components/InputSearch";
+import Logo from "@/components/Logo";
 import { MarvelCharacter } from "@/types/MarvelCharacters";
 import { MarvelComic } from "@/types/MarvelComic";
 import { MarvelListResponse, MarvelResponse } from "@/types/MarvelResponse";
-import { cn } from "@/utils/cn";
 import { parseISO, format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import Image from "next/image";
@@ -43,7 +44,7 @@ async function fetchLastComicDate({ characterId }: { characterId: number }): Pro
 }
 
 export default async function CharacterDetails({ params }: { params: { slug: string } }) {
-  const charecterName = decodeURI(params.slug)
+  const charecterName = decodeURI(params.slug).replace(/__/g, "/");
   const { data, attributionText } = await fetchHero({ name: charecterName })
   const [hero] = data.results
 
@@ -66,6 +67,14 @@ export default async function CharacterDetails({ params }: { params: { slug: str
       className="min-h-screen flex flex-col gap-12 pt-6"
       style={{ backgroundColor: paletteData.LightVibrant?.hex + "4D" }}
     >
+      <header className="flex flex-col items-center gap-4 max-w-7xl w-full mx-auto lg:flex-row px-6">
+        <Logo small />
+
+        <div className="max-w-3xl px-12 w-full mx-auto">
+          <InputSearch className="bg-white text-neutral-500 placeholder:text-neutral-500" query={""} />
+        </div>
+      </header>
+
       <section
         data-name={sanitizedName}
         className="lg:bg-name-container flex-1 isolate gap-16 items-center max-w-7xl mx-auto px-24 py-24 grid md:grid-cols-6 lg:grid-cols-12"

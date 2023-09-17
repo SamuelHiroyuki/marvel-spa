@@ -29,7 +29,7 @@ export default function HeroesSorter() {
                 search: setSearchParams("orderBy", nextOrder)
             }}
             className={cn(
-                "after:content-['\\25bc'] after:text-[#ff0000] after:text-xs",
+                "after:content-['▼'] after:text-[#ff0000] after:text-xs",
                 "flex items-center gap-2",
                 {
                     "after:rotate-180": currentOrder === "desc"
