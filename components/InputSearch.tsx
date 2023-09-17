@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { throttle } from "@/utils/function";
 import { MarvelListResponse, MarvelResponse } from "@/types/MarvelResponse";
@@ -112,12 +112,12 @@ export default function InputSearch({ query, className, disabled = false }: Prop
                     "z-10 hidden shadow-lg py-2 overflow-hidden",
                     "absolute bg-[#FDECEC] rounded inset-x-0 mt-2",
                 ], {
-                    "peer-focus:block": options.length > 0,
+                    "peer-focus:block hover:block": options.length > 0,
                 })}
             >
                 {options.map(option => (
-                    <li key={option.id} className="text-neutral-500 px-8 py-4 hover:bg-[#ff0000]/20 cursor-pointer">
-                        <Link href="#">
+                    <li key={option.id} className="text-neutral-500 hover:bg-[#ff0000]/20 cursor-pointer">
+                        <Link className="inline-block w-full px-8 py-4" href={`/character/${option.fullname.replace(/\//g, "__")}`}>
                             <span className="text-neutral-700 font-semibold">{option.highlight}</span>
                             {option.complement}
                         </Link>
