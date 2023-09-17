@@ -5,10 +5,10 @@ export default function Skeleton() {
                 <li key={index} className="flex flex-col gap-4">
                     <div className="overflow-hidden group h-full">
                         <div
-                            className='h-[225px] w-[315px] bg-neutral-400/50'
+                            className='h-[235px] w-[315px] bg-neutral-400/50'
                         />
                     </div>
-                    <p className='rounded-lg bg-neutral-400/70 h-4 w-[100px]' />
+                    <p className='rounded-lg bg-neutral-400/70 h-[21px] w-[100px]' />
                 </li>
             ))}
         </ul>

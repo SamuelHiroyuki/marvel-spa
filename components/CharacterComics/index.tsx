@@ -18,7 +18,7 @@ export default async function CharacterComics({ characterId }: { characterId: nu
 
     if (!data.results.length) {
         return (
-            <div className="flex flex-col items-center justify-center gap-2 h-96">
+            <div className="flex flex-col items-center justify-center gap-2 h-[600px]">
                 <Image
                     src="/comics.svg"
                     alt=''
