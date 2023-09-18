@@ -33,7 +33,7 @@ export default async function CharacterComics({ characterId }: { characterId: nu
     }
 
     return (
-        <ul role="list" className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-x-9 gap-y-12">
+        <ul role="list" className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-x-9 gap-y-12">
             {data.results.map(comic => {
                 const stringOnSaleDate = comic.dates.find(date => date.type === "onsaleDate")
                 const detailsUrl = comic.urls.find(url => url.type === "detail")
@@ -42,15 +42,16 @@ export default async function CharacterComics({ characterId }: { characterId: nu
 
                 return (
                     <li key={comic.id} className="flex flex-col gap-4">
-                        <div className="overflow-hidden group perspective-1000 h-full">
+                        <div className="overflow-hidden group perspective-1000 flex-1">
                             <div className="preserve-3d h-full grid transition-all duration-500 group-hover:-rotate-y-180">
                                 <div className='grid-area-1 backface-hidden'>
                                     <Image
                                         src={`${comic.thumbnail.path}.${comic.thumbnail.extension}`}
                                         alt={comic.title}
-                                        className='h-full'
-                                        width={225}
-                                        height={315}
+                                        className='object-cover h-full w-auto'
+                                        width={151}
+                                        height={231}
+                                        sizes="(min-width: 1300px) 151px, (min-width: 1040px) calc(4.17vw + 98px), (min-width: 760px) 151px, (min-width: 640px) calc(26vw - 41px), (min-width: 360px) 151px, calc(100vw - 192px)"
                                     />
                                 </div>
                                 <div className={cn(
@@ -61,9 +62,9 @@ export default async function CharacterComics({ characterId }: { characterId: nu
                                     <Image
                                         src={`${comic.thumbnail.path}.${comic.thumbnail.extension}`}
                                         alt={comic.title}
-                                        className='h-full z-[-1] blur-sm opacity-50'
+                                        className='z-[-1] blur-sm opacity-50 object-cover h-full w-auto'
                                         fill
-                                        priority
+                                        sizes="(min-width: 1280px) 151px, (min-width: 1040px) calc(20vw - 67px), (min-width: 640px) calc(33.42vw - 89px), calc(100vw - 192px)"
                                     />
                                     <p title={comic.title} className='text-xs text-center font-extrabold'>
                                         {comic.title}

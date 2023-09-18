@@ -117,7 +117,7 @@ export default function InputSearch({ query, className, disabled = false }: Prop
             >
                 {options.map(option => (
                     <li key={option.id} className="text-neutral-500 hover:bg-[#ff0000]/20 cursor-pointer">
-                        <Link className="inline-block w-full px-8 py-4" href={`/character/${option.fullname.replace(/\//g, "__")}`}>
+                        <Link className="inline-block w-full px-8 py-4" href={`/characters/${option.fullname.replace(/\//g, "__")}`}>
                             <span className="text-neutral-700 font-semibold">{option.highlight}</span>
                             {option.complement}
                         </Link>
@@ -127,6 +127,7 @@ export default function InputSearch({ query, className, disabled = false }: Prop
 
             <button
                 tabIndex={-1}
+                aria-label="search"
                 onClick={handleSubmit(onSubmit)}
                 className="absolute left-6 inset-y-0 translate-y-1/2 h-fit"
             >

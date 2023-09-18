@@ -11,6 +11,7 @@ export default function HeartButton({ dimension = 16, isChecked = false, classNa
     return (
         <button
             {...props}
+            aria-label="favorite"
             className={cn("flex flex-col items-center justify-center group", className)}
         >
             <Image

@@ -10,10 +10,15 @@ import { MarvelComic } from "@/types/MarvelComic";
 import { MarvelListResponse, MarvelResponse } from "@/types/MarvelResponse";
 import { parseISO, format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { Metadata } from "next";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import Vibrant from "node-vibrant";
 import { Suspense } from "react";
+
+interface PageProps {
+  params: { slug: string }
+}
 
 async function fetchHero({ name }: { name: string }): Promise<MarvelResponse<MarvelListResponse<MarvelCharacter>>> {
   const url = new URL("api/marvel/characters", "http://localhost:3000/")
@@ -43,7 +48,30 @@ async function fetchLastComicDate({ characterId }: { characterId: number }): Pro
   return stringOnSaleDate?.date || ""
 }
 
-export default async function CharacterDetails({ params }: { params: { slug: string } }) {
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const charecterName = decodeURI(params.slug).replace(/__/g, "/");
+  const { data } = await fetchHero({ name: charecterName })
+  const [hero] = data.results
+
+  if (!hero) {
+    return {
+      title: "Herói desconhecido"
+    }
+  }
+
+  const meta = {
+    title: `Marvel Search Heroes | ${hero.name}`,
+    description: "Detalhes do herói"
+  }
+
+  if (!!hero.description) meta.description = hero.description
+
+  return meta
+}
+
+
+export default async function CharacterDetails({ params }: PageProps) {
   const charecterName = decodeURI(params.slug).replace(/__/g, "/");
   const { data, attributionText } = await fetchHero({ name: charecterName })
   const [hero] = data.results
@@ -77,10 +105,10 @@ export default async function CharacterDetails({ params }: { params: { slug: str
 
       <section
         data-name={sanitizedName}
-        className="lg:bg-name-container flex-1 isolate gap-16 items-center max-w-7xl mx-auto px-24 py-24 grid md:grid-cols-6 lg:grid-cols-12"
+        className="lg:bg-name-container flex-1 isolate gap-16 items-center max-w-7xl mx-auto px-6 lg:px-24 py-24 grid md:grid-cols-6 lg:grid-cols-12"
       >
-        <div className="xl:col-span-4 lg:col-span-6 sm:col-span-full flex flex-col gap-6">
-          <div className="flex justify-between items-center">
+        <div className="items-center lg:items-start xl:col-span-4 lg:col-span-6 sm:col-span-full flex flex-col gap-6">
+          <div className="flex justify-between items-center w-full">
             <h2 className="text-neutral-700 uppercase font-extrabold text-4xl">
               {hero.name}
             </h2>
@@ -159,6 +187,7 @@ export default async function CharacterDetails({ params }: { params: { slug: str
             width={400}
             height={400}
             className="rounded w-full"
+            priority
           />
         </div>
       </section>
