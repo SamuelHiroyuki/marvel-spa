@@ -4,10 +4,10 @@ export default function Skeleton() {
     return (
         <>
             <section className="max-w-7xl mx-auto px-24 flex-1">
-                <header className="mb-8 flex flex-col gap-16">
+                <header className="mb-8 flex flex-col gap-20">
                     <InputSearch disabled query={""} />
                     <div className="animate-pulse">
-                        <p className="rounded-lg h-4 w-[200px] bg-neutral-400/50" />
+                        <p className="rounded-lg h-6 mt-2 w-[200px] bg-neutral-400/50" />
                     </div>
                 </header>
                 <ul role="list" className="animate-pulse grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-9 gap-y-12">

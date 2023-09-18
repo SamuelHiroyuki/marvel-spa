@@ -46,7 +46,7 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
       <header className="flex flex-col items-center gap-4">
         <Logo />
         <div className="flex flex-col items-center gap-2 px-14">
-          <h1 className="text-neutral-700 uppercase font-bold text-3xl">Explore o Universo</h1>
+          <h1 className="text-neutral-700 uppercase font-bold text-3xl text-center">Explore o Universo</h1>
           <p className="text-neutral-500 font-medium text-sm text-center">
             Mergulhe no domínio deslumbrante de todos os personagens que você ama - e aqueles que você descobrirá em breve!
           </p>
@@ -61,7 +61,7 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
               `Encontrados ${1 + ((page - 1) * 20)} - ${Math.min(page * 20, data.count)} de ${data.total} heróis`
             return (
               <>
-                <section className="max-w-7xl mx-auto px-24 flex-1 w-full flex flex-col gap-8">
+                <section className="max-w-7xl mx-auto px-6 lg:px-24 flex-1 w-full flex flex-col gap-8">
                   <header className="flex flex-col gap-20">
                     <InputSearch query={query} />
 
@@ -70,7 +70,7 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
                         {heroesFoundText}
                       </p>
 
-                      <div className="md:ml-auto m-0 flex justify-between gap-8">
+                      <div className="md:ml-auto m-0 flex justify-end gap-8 flex-wrap">
                         <HeroesSorter />
                         <HeartSwitch />
                       </div>
