@@ -51,7 +51,7 @@ export default function HeroesList({ heroes }: HeroesListProps) {
                             {hero.name}
                         </p>
                         <div className="min-w-[16px]">
-                            <HeartButton />
+                            <HeartButton characterId={hero.id} />
                         </div>
                     </div>
                 </li>

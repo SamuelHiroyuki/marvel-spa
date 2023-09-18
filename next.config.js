@@ -8,7 +8,10 @@ const nextConfig = {
                 hostname: "i.annihil.us"
             }
         ]
-    }
+    },
+    experimental: {
+        serverActions: true,
+    },
 }
 
 module.exports = nextConfig

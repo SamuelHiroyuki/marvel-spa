@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function HeartSwitch({ checked = false }: { checked?: boolean }) {
     return (
-        <Link href="/favoritos"
+        <Link href="/characters/favorites"
             className="relative flex gap-4 w-fit items-center"
         >
             <div
