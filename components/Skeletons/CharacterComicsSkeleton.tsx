@@ -1,4 +1,4 @@
-export default function Skeleton() {
+export default function CharacterComicsSkeleton() {
     return (
         <ul role="list" className="animate-pulse grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-x-9 gap-y-12">
             {[...Array(12)].map((_, index) => (

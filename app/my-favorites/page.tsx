@@ -3,43 +3,50 @@ import HeroesList from "@/components/HeroesList";
 import InputSearch from "@/components/InputSearch";
 import { MarvelCharacter } from "@/types/MarvelCharacters";
 import { MarvelListResponse, MarvelResponse } from "@/types/MarvelResponse";
-import { parseNumberWithMin } from "@/utils/number";
 import { SearchParams, handleServerSearchParam } from "@/utils/params";
 import { Suspense } from "react";
 import HeroesSorter from "@/components/HeroesSorter";
 import { OrderByType, parseStringToOrderBy } from "@/utils/orderBy";
 import HeartSwitch from "@/components/HeartSwitch";
-import Pagination from "@/components/Pagination";
 import Footer from "@/components/Footer";
 import Logo from "@/components/Logo";
-import HeroesListSkeleton from "@/components/Skeletons/HeroesListSkeleton";
+import { cookies } from 'next/headers'
+import FavoritesHeroesListSkeleton from "@/components/Skeletons/FavoritesHeroesListSkeleton";
 
-interface FetchHeroesProps {
-  query: string
-  page: number
-  orderBy: OrderByType
+async function fetchFavorites({ charactersIds, orderBy }: {
+  charactersIds: string[];
+  orderBy: OrderByType;
+}) {
+  const requests = await Promise.all(charactersIds.map(characterId => fetch(
+    new URL(`api/marvel/characters/${characterId}`, "http://localhost:3000/"),
+    { next: { revalidate: 1800 } }
+  )))
+
+  const responses: Array<MarvelResponse<MarvelListResponse<MarvelCharacter>>> =
+    await Promise.all(requests.map(request => request.json()))
+
+  const heroes = responses
+    .map(response => response.data.results.at(0) as MarvelCharacter)
+    .sort()
+
+  return {
+    attributionText: responses.at(0)?.attributionText || "Data provided by Marvel.",
+    heroes: orderBy === "asc" ? heroes : heroes.reverse()
+  }
 }
 
-async function fetchHeroes({ page, query, orderBy }: FetchHeroesProps): Promise<MarvelResponse<MarvelListResponse<MarvelCharacter>>> {
-  const url = new URL("api/marvel/characters", "http://localhost:3000/")
-
-  url.searchParams.append("page", page.toString())
-  url.searchParams.append("query", query)
-  url.searchParams.append("orderBy", orderBy)
-
-  const request = await fetch(url, { next: { revalidate: 1800 } })
-
-  return await request.json()
-}
-
-export default async function Home({ searchParams }: { searchParams: SearchParams }) {
+export default async function Favorites({ searchParams }: { searchParams: SearchParams }) {
   const getParam = handleServerSearchParam(searchParams)
-
-  const page = getParam<number>("page", 1, parseNumberWithMin)
-  const query = getParam<string>("q", "")
   const orderBy = getParam<OrderByType>("orderBy", "asc", parseStringToOrderBy)
 
-  const promise = fetchHeroes({ page, query, orderBy })
+  const cookieStore = cookies()
+  const allEntries = cookieStore.getAll()
+  const favorites = allEntries
+    .filter(entry => entry.name.includes("fav-character"))
+    .filter(entry => !!entry.value)
+  const charactersIds = favorites.map(entry => entry.value)
+
+  const promise = fetchFavorites({ charactersIds, orderBy })
 
   return (
     <main className="min-h-screen flex flex-col gap-12 pt-6">
@@ -53,17 +60,17 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
         </div>
       </header>
 
-      <Suspense key={`${page}_${query}_${orderBy}`} fallback={<HeroesListSkeleton />}>
+      <Suspense key={orderBy} fallback={<FavoritesHeroesListSkeleton />}>
         <Await promise={promise}>
-          {({ data, attributionText }) => {
-            const heroesFoundText = data.count === 0 ?
-              "Nenhum herói encontrado" :
-              `Encontrados ${1 + ((page - 1) * 20)} - ${Math.min(page * 20, data.count)} de ${data.total} heróis`
+          {({ heroes, attributionText }) => {
+            const heroesFoundText = heroes.length === 0 ?
+              "Nenhum herói favoritado!" :
+              `${heroes.length} heróis favoritados`
             return (
               <>
                 <section className="max-w-7xl mx-auto px-6 lg:px-24 flex-1 w-full flex flex-col gap-8">
                   <header className="flex flex-col gap-20">
-                    <InputSearch query={query} />
+                    <InputSearch query="" />
 
                     <div className="flex justify-between items-start md:items-center flex-col md:flex-row gap-8">
                       <p className="font-medium text-neutral-400 md:text-base text-sm">
@@ -72,13 +79,12 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
 
                       <div className="md:ml-auto m-0 flex justify-end gap-8 flex-wrap">
                         <HeroesSorter />
-                        <HeartSwitch />
+                        <HeartSwitch checked />
                       </div>
                     </div>
                   </header>
 
-                  <HeroesList heroes={data.results} />
-                  {data.count !== 0 && <Pagination page={page} total={data.total} />}
+                  <HeroesList heroes={heroes} />
                 </section>
 
                 <Footer attributionText={attributionText} />

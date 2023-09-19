@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Logo({ small = false }: { small?: boolean }) {
     return (
-        <Link href="/" className={cn("flex items-end select-none", { "min-w-[300px] gap-4 items-center": small })}>
+        <Link href="/" className={cn("flex items-center sm:items-end select-none flex-col sm:flex-row", { "sm:min-w-[300px] gap-4 sm:items-center": small })}>
             <Image
                 src="/logo.svg"
                 alt="Marvel Search Heroes Logo"

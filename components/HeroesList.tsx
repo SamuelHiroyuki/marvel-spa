@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { MarvelCharacter } from "@/types/MarvelCharacters";
-import HeartButton from "../HeartButton";
+import HeartButton from "./HeartButton";
 
 interface HeroesListProps {
     heroes: MarvelCharacter[]

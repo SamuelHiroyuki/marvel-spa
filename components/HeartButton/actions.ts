@@ -1,5 +1,6 @@
 "use server"
 
+import { revalidatePath } from "next/cache"
 import { cookies } from "next/headers"
 import type { TypeOptions } from "react-toastify"
 
@@ -9,7 +10,7 @@ interface ReturnType {
     type: TypeOptions
 }
 
-export async function addToCookies(data: FormData): Promise<ReturnType> {
+export async function addToCookies(data: FormData, revalidateFavorites: boolean): Promise<ReturnType> {
     "use server"
     const characterId = (data.get('characterId') || "") as string
 
@@ -20,11 +21,13 @@ export async function addToCookies(data: FormData): Promise<ReturnType> {
 
     if (storedCharacterId) {
         cookieStore.delete(storedCharacterId)
+        if (revalidateFavorites) revalidatePath("my-favorites")
         return { message: 'Herói desfavoritado!', icon: "🐱‍🏍", type: "success" }
     }
 
     if (favorites.length < 5) {
         cookieStore.set(`fav-character:${characterId}`, characterId)
+        if (revalidateFavorites) revalidatePath("my-favorites")
         return { message: 'Herói favoritado!', icon: "🦸", type: "default" }
     }
 

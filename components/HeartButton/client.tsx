@@ -5,6 +5,7 @@ import { cn } from "@/utils/cn";
 import { useCallback } from "react";
 import { addToCookies } from "./actions";
 import { toast } from "react-toastify";
+import { usePathname } from "next/navigation";
 
 export interface HeartButtonProps {
     isChecked: boolean
@@ -19,10 +20,12 @@ export default function HeartButtonClient({
     className,
     isChecked
 }: HeartButtonProps) {
+    const pathname = usePathname()
+
     const onSubmit = useCallback(async (data: FormData) => {
-        const { message, icon, type } = await addToCookies(data)
+        const { message, icon, type } = await addToCookies(data, pathname === "my-favorites")
         toast(message, { icon, type, autoClose: 2000 })
-    }, [])
+    }, [pathname])
 
     return (
         <form action={onSubmit}>

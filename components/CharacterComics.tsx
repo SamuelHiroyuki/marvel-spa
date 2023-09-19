@@ -48,7 +48,7 @@ export default async function CharacterComics({ characterId }: { characterId: nu
                                     <Image
                                         src={`${comic.thumbnail.path}.${comic.thumbnail.extension}`}
                                         alt={comic.title}
-                                        className='object-cover h-full w-auto'
+                                        className='object-cover h-auto w-full'
                                         width={151}
                                         height={231}
                                         sizes="(min-width: 1300px) 151px, (min-width: 1040px) calc(4.17vw + 98px), (min-width: 760px) 151px, (min-width: 640px) calc(26vw - 41px), (min-width: 360px) 151px, calc(100vw - 192px)"

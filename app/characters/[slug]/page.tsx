@@ -1,10 +1,10 @@
 
 import CharacterComics from "@/components/CharacterComics";
-import Skeleton from "@/components/CharacterComics/skeleton";
 import Footer from "@/components/Footer";
 import HeartButton from "@/components/HeartButton";
 import InputSearch from "@/components/InputSearch";
 import Logo from "@/components/Logo";
+import CharacterComicsSkeleton from "@/components/Skeletons/CharacterComicsSkeleton";
 import { MarvelCharacter } from "@/types/MarvelCharacters";
 import { MarvelComic } from "@/types/MarvelComic";
 import { MarvelListResponse, MarvelResponse } from "@/types/MarvelResponse";
@@ -98,7 +98,7 @@ export default async function CharacterDetails({ params }: PageProps) {
       <header className="flex flex-col items-center gap-4 max-w-7xl w-full mx-auto lg:flex-row px-6">
         <Logo small />
 
-        <div className="max-w-3xl px-12 w-full mx-auto">
+        <div className="max-w-3xl sm:px-12 w-full mx-auto">
           <InputSearch className="bg-white text-neutral-500 placeholder:text-neutral-500" query={""} />
         </div>
       </header>
@@ -113,7 +113,7 @@ export default async function CharacterDetails({ params }: PageProps) {
               {hero.name}
             </h2>
             <div className="min-w-[24px]">
-              <HeartButton dimension={24} />
+              <HeartButton characterId={hero.id} dimension={24} />
             </div>
           </div>
 
@@ -192,9 +192,9 @@ export default async function CharacterDetails({ params }: PageProps) {
         </div>
       </section>
 
-      <section className="flex-1 isolate max-w-7xl mx-auto px-24 w-full">
+      <section className="flex-1 isolate max-w-7xl mx-auto px-6 lg:px-24 w-full">
         <h2 className="text-neutral-700 font-extrabold text-2xl mb-14">Últimos lançamentos</h2>
-        <Suspense fallback={<Skeleton />}>
+        <Suspense fallback={<CharacterComicsSkeleton />}>
           <CharacterComics characterId={hero.id} />
         </Suspense>
       </section>
