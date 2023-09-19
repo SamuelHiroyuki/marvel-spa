@@ -1,6 +1,6 @@
 export default function LoadingSpinner() {
     return (
-        <div id="nprogress">
+        <div className="progress-bar">
             <div className="spinner" role="spinner">
                 <div className="spinner-icon" />
             </div>

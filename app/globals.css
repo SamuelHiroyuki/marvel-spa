@@ -34,23 +34,32 @@
     }
 }
 
-#nprogress {
+body:has(>#nprogress) .progress-bar {
+    display: none;
+}
+
+#nprogress,
+.progress-bar {
     @apply pointer-events-none;
 }
 
-#nprogress .bar {
+#nprogress .bar,
+.progress-bar .bar {
     @apply bg-[#ff0000] fixed z-[5] top-0 left-0 w-full h-1;
 }
 
 /* Fancy blur effect */
-#nprogress .peg {
+#nprogress .peg,
+.progress-bar .peg {
     @apply shadow-nprogress shadow-[#ff0000] block absolute right-0 opacity-100 h-full w-[100px] rotate-3 -translate-y-1;
 }
 
-#nprogress .spinner {
+#nprogress .spinner,
+.progress-bar .spinner {
     @apply block fixed z-40 top-6 right-4;
 }
 
-#nprogress .spinner-icon {
+#nprogress .spinner-icon,
+.progress-bar .spinner-icon {
     @apply animate-nprogress w-5 h-5 box-border border-2 border-transparent rounded-full border-t-[#ff0000] border-l-[#ff0000];
 }
