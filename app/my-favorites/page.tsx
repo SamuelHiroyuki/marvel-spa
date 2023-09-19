@@ -12,6 +12,12 @@ import Footer from "@/components/Footer";
 import Logo from "@/components/Logo";
 import { cookies } from 'next/headers'
 import FavoritesHeroesListSkeleton from "@/components/Skeletons/FavoritesHeroesListSkeleton";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Marvel Search Heroes | Seus favoritos',
+  description: 'Seus heróis mais amados em todos os universos',
+}
 
 async function fetchFavorites({ charactersIds, orderBy }: {
   charactersIds: string[];
