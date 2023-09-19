@@ -1,4 +1,5 @@
 import InputSearch from "@/components/InputSearch";
+import LoadingSpinner from "../LoadingSpinner";
 
 export default function HeroesListSkeleton() {
     return (
@@ -30,6 +31,8 @@ export default function HeroesListSkeleton() {
             <footer className="bg-[#ff0000] h-16 mt-12 flex items-center justify-center">
                 <p className="text-white font-medium">Data provided by Marvel.</p>
             </footer>
+
+            <LoadingSpinner />
         </>
     )
 }

@@ -26,6 +26,8 @@ export default function HeartSwitch({ checked = false, disabled = false }: {
                 id="checkbox"
                 disabled={disabled}
                 defaultChecked={checked}
+                data-navigation="switch"
+                data-route={nextRoute}
                 onChange={() => setTimeout(() => push(nextRoute), 160)}
                 className="absolute w-14 h-8 opacity-0 z-[1] rounded-2xl peer"
             />

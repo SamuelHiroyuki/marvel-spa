@@ -1,3 +1,4 @@
+import ProgressBar from '@/components/ProgressBar';
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
@@ -20,7 +21,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         {children}
+
         <ToastContainer limit={5} />
+        <ProgressBar />
       </body>
     </html>
   )

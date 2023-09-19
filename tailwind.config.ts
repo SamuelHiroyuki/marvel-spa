@@ -11,6 +11,12 @@ const config: Config = {
     extend: {
       translate: {
         "100_4": "calc(100% - 4px)"
+      },
+      boxShadow: {
+        nprogress: "0 0 10px var(--tw-shadow-color), 0 0 5px var(--tw-shadow-color)",
+      },
+      animation: {
+        nprogress: "spin 400ms linear infinite"
       }
     },
   },
