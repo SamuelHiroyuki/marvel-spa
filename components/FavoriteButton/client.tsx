@@ -7,19 +7,19 @@ import { addToCookies } from "./actions";
 import { toast } from "react-toastify";
 import { usePathname } from "next/navigation";
 
-export interface HeartButtonProps {
+export interface FavoriteButtonProps {
     isChecked: boolean
     dimension?: number
     characterId: number
     className?: string
 }
 
-export default function HeartButtonClient({
+export default function FavoriteButtonClient({
     characterId,
     dimension = 16,
     className,
     isChecked
-}: HeartButtonProps) {
+}: FavoriteButtonProps) {
     const pathname = usePathname()
 
     const onSubmit = useCallback(async (data: FormData) => {

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { MarvelCharacter } from "@/types/MarvelCharacters";
-import HeartButton from "./HeartButton";
+import FavoriteButton from "./FavoriteButton";
 
 interface HeroesListProps {
     heroes: MarvelCharacter[]
@@ -55,7 +55,7 @@ export default function HeroesList({ heroes }: HeroesListProps) {
                             {hero.name}
                         </p>
                         <div className="min-w-[16px]">
-                            <HeartButton characterId={hero.id} />
+                            <FavoriteButton characterId={hero.id} />
                         </div>
                     </div>
                 </li>

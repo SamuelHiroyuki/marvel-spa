@@ -1,7 +1,7 @@
 
 import CharacterComics from "@/components/CharacterComics";
 import Footer from "@/components/Footer";
-import HeartButton from "@/components/HeartButton";
+import FavoriteButton from "@/components/FavoriteButton";
 import InputSearch from "@/components/InputSearch";
 import Logo from "@/components/Logo";
 import CharacterComicsSkeleton from "@/components/Skeletons/CharacterComicsSkeleton";
@@ -113,7 +113,7 @@ export default async function CharacterDetails({ params }: PageProps) {
               {hero.name}
             </h2>
             <div className="min-w-[24px]">
-              <HeartButton characterId={hero.id} dimension={24} />
+              <FavoriteButton characterId={hero.id} dimension={24} />
             </div>
           </div>
 

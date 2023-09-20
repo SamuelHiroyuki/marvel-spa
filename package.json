@@ -9,6 +9,7 @@
     "lint": "next lint",
     "prepare": "husky install",
     "commit": "cz",
+    "cypress": "cypress open",
     "check-types": "tsc -p tsconfig.json --pretty --noEmit && tsc -p cypress/tsconfig.json --pretty --noEmit"
   },
   "dependencies": {
