@@ -24,6 +24,7 @@ export default function HeroesSorter() {
 
     return (
         <Link
+            data-testid="orderBy-button"
             href={{
                 href: pathname,
                 search: setSearchParams("orderBy", nextOrder)

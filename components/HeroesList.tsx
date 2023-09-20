@@ -31,8 +31,11 @@ export default function HeroesList({ heroes }: HeroesListProps) {
     return (
         <ul role="list" className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-9 gap-y-12">
             {heroes.map((hero, index) => (
-                <li key={hero.id} className="flex flex-col gap-6">
-                    <Link href={`/characters/${hero.name.replace(/\//g, "__")}`} className='relative group aspect-square overflow-hidden'>
+                <li key={hero.id} className="flex flex-col gap-6" data-testid={`HeroesList__item-${index}`}>
+                    <Link
+                        href={`/characters/${hero.name.replace(/\//g, "__")}`}
+                        className='relative group aspect-square overflow-hidden'
+                    >
                         <Image
                             src={`${hero.thumbnail.path}.${hero.thumbnail.extension}`}
                             alt=''

@@ -21,6 +21,7 @@ export default function Pagination({ page, total }: PaginationProps) {
     return (
         <div className="flex gap-8 justify-between md:justify-end">
             <Button
+                data-testid="previous-page-button"
                 href={{
                     href: pathname,
                     search: setSearchParams("page", (page - 1).toString())
@@ -30,6 +31,7 @@ export default function Pagination({ page, total }: PaginationProps) {
                 Anterior
             </Button>
             <Button
+                data-testid="next-page-button"
                 href={{
                     href: pathname,
                     search: setSearchParams("page", (page + 1).toString())
@@ -42,12 +44,12 @@ export default function Pagination({ page, total }: PaginationProps) {
     )
 }
 
-function Button({ disabled = false, children, ...props }: LinkProps & ({ disabled?: boolean; children: ReactNode })) {
+function Button({ disabled = false, children, ...props }: LinkProps & ({ disabled?: boolean; children: ReactNode; 'data-testid': string })) {
     const baseStyles = "text-white font-medium px-4 py-1.5 rounded"
 
     if (disabled) {
         return (
-            <button disabled className={cn("bg-neutral-300", baseStyles)}>{children}</button>
+            <button data-testid={props["data-testid"]} disabled className={cn("bg-neutral-300", baseStyles)}>{children}</button>
         )
     }
 
