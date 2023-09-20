@@ -33,6 +33,8 @@ export default function FavoriteButtonClient({
             <button
                 type="submit"
                 aria-label="favorite"
+                data-testid={`favoriteButton__button-${characterId}`}
+                data-checked={isChecked}
                 className={cn("flex flex-col items-center justify-center group", className)}
             >
                 <Image
