@@ -30,7 +30,7 @@ export default function ProgressBar() {
         };
 
         const handleMutation: MutationCallback = () => {
-            const anchorElements = document.querySelectorAll('a');
+            const anchorElements: NodeListOf<HTMLAnchorElement> = document.querySelectorAll('a:not([target="_blank"])');
             anchorElements.forEach((anchor) =>
                 anchor.addEventListener("click", handleAnchorClick)
             );
