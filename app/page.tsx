@@ -13,6 +13,7 @@ import Pagination from "@/components/Pagination";
 import Footer from "@/components/Footer";
 import Logo from "@/components/Logo";
 import HeroesListSkeleton from "@/components/Skeletons/HeroesListSkeleton";
+import { getApiUrl } from "@/services";
 
 interface FetchHeroesProps {
   query: string
@@ -21,7 +22,7 @@ interface FetchHeroesProps {
 }
 
 async function fetchHeroes({ page, query, orderBy }: FetchHeroesProps): Promise<MarvelResponse<MarvelListResponse<MarvelCharacter>>> {
-  const url = new URL("api/marvel/characters", "http://localhost:3000/")
+  const url = getApiUrl("api/marvel/characters")
 
   url.searchParams.append("page", page.toString())
   url.searchParams.append("query", query)

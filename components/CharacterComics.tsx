@@ -4,9 +4,10 @@ import Image from "next/image"
 import Link from "next/link"
 import { format, parseISO } from "date-fns"
 import { cn } from "@/utils/cn"
+import { getApiUrl } from "@/services"
 
 async function fetchComics({ characterId }: { characterId: number }): Promise<MarvelResponse<MarvelListResponse<MarvelComic>>> {
-    const url = new URL(`api/marvel/characters/${characterId}/comics`, "http://localhost:3000/")
+    const url = getApiUrl(`api/marvel/characters/${characterId}/comics`)
 
     const request = await fetch(url, { next: { revalidate: 1800 } })
 

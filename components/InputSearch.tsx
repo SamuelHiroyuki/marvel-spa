@@ -12,6 +12,7 @@ import { MarvelListResponse, MarvelResponse } from "@/types/MarvelResponse";
 import { MarvelCharacter } from "@/types/MarvelCharacters";
 import { splitString } from "@/utils/string";
 import { cn } from "@/utils/cn";
+import { getApiUrl } from "@/services";
 
 const FormDataSchema = z.object({
     q: z.string(),
@@ -33,7 +34,7 @@ interface Props {
 }
 
 async function fetchHeroesByName(q: string): Promise<MarvelResponse<MarvelListResponse<MarvelCharacter>>> {
-    const url = new URL("api/marvel/characters", "http://localhost:3000/")
+    const url = getApiUrl("api/marvel/characters")
     url.searchParams.append("limit", "5")
     url.searchParams.append("query", q)
     const request = await fetch(url)

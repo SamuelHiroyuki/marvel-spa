@@ -15,13 +15,14 @@ import Image from "next/image";
 import { redirect } from "next/navigation";
 import Vibrant from "node-vibrant";
 import { Suspense } from "react";
+import { getApiUrl } from "@/services";
 
 interface PageProps {
   params: { slug: string }
 }
 
 async function fetchHero({ name }: { name: string }): Promise<MarvelResponse<MarvelListResponse<MarvelCharacter>>> {
-  const url = new URL("api/marvel/characters", "http://localhost:3000/")
+  const url = getApiUrl("api/marvel/characters")
 
   url.searchParams.append("query", name)
 
@@ -31,7 +32,7 @@ async function fetchHero({ name }: { name: string }): Promise<MarvelResponse<Mar
 }
 
 async function fetchLastComicDate({ characterId }: { characterId: number }): Promise<string> {
-  const url = new URL(`api/marvel/characters/${characterId}/comics`, "http://localhost:3000/")
+  const url = getApiUrl(`api/marvel/characters/${characterId}/comics`)
   url.searchParams.append("limit", "1")
 
   const request = await fetch(url, { next: { revalidate: 1800 } })

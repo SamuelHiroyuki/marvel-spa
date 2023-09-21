@@ -13,6 +13,7 @@ import Logo from "@/components/Logo";
 import { cookies } from 'next/headers'
 import FavoritesHeroesListSkeleton from "@/components/Skeletons/FavoritesHeroesListSkeleton";
 import { Metadata } from "next";
+import { getApiUrl } from "@/services";
 
 export const metadata: Metadata = {
   title: 'Marvel Search Heroes | Seus favoritos',
@@ -24,7 +25,7 @@ async function fetchFavorites({ charactersIds, orderBy }: {
   orderBy: OrderByType;
 }) {
   const requests = await Promise.all(charactersIds.map(characterId => fetch(
-    new URL(`api/marvel/characters/${characterId}`, "http://localhost:3000/"),
+    getApiUrl(`api/marvel/characters/${characterId}`),
     { next: { revalidate: 1800 } }
   )))
 

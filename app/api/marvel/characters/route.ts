@@ -1,4 +1,4 @@
-import { requestToMarvel } from '@/utils/marvelService';
+import { fetchMarvel } from '@/services/marvel';
 import { parseNumberWithMin, parseStringToNumber } from '@/utils/number';
 import { parseStringToOrderBy } from '@/utils/orderBy';
 import { NextResponse } from 'next/server';
@@ -12,7 +12,7 @@ export async function GET(request: Request) {
     const orderBy = parseStringToOrderBy(searchParams.get('orderBy') || "", "asc")
 
     const offset = (page - 1) * 20
-    const _request = await requestToMarvel("characters", {
+    const _request = await fetchMarvel("characters", {
         searchParams: {
             offset: offset.toString(),
             nameStartsWith: query,

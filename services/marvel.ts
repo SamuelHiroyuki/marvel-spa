@@ -1,8 +1,8 @@
 import "server-only"
 import { createHash } from "crypto"
-import { SearchParams } from "./params"
+import { SearchParams } from "@/utils/params"
 
-export function requestToMarvel(path: string, { init, searchParams }: {
+export function fetchMarvel(path: string, { init, searchParams }: {
     init?: RequestInit
     searchParams?: SearchParams
 } = {}) {
