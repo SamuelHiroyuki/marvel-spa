@@ -30,7 +30,7 @@ As funcionalidades incluem:
 
 ## 📊 Métricas
 <div align="center">
-<img alt="" width="400" src="" alt="" />
+<img alt="" width="400" src="/metrics.plugin.pagespeed.svg" alt="Page speed" />
 </div>
 
 <br />
